@@ -1,0 +1,30 @@
+:root{
+	--main-color: #68bd45;
+}
+
+body{
+	margin: 0;
+}
+
+.menu{
+	display: flex;
+	flex-direction: row;
+	background-color: var(--main-color);
+	justify-content: flex-end
+}
+
+.menu-element{
+	padding: 10px 5px 10px 5px;
+	text-decoration: none;
+	color: white;
+	font-size: 20px;
+}
+
+.menu-element:hover{
+	background-color: white;
+	color: var(--main-color);
+}
+
+.menu-separator-v{
+	border-left: 2px solid white;
+}
