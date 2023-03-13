@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.studentschat.component.AuthenticationProvider;
+import com.example.studentschat.component.DaoAuthenticationProvider;
 import com.example.studentschat.service.impl.JpaUserDetailsService;
 
 @Configuration
@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	JpaUserDetailsService userDetailsService;
 	
 	@Autowired
-	AuthenticationProvider authenticationProvider;
+	DaoAuthenticationProvider daoAuthenticationProvider;
 	
 	@Autowired
 	public SecurityConfig(JpaUserDetailsService userDetailsService) {
@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService);
-		auth.authenticationProvider(authenticationProvider);
+		auth.authenticationProvider(daoAuthenticationProvider);
 	}
 
 	@Override

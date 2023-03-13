@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 @Component
-public class AuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider {
+public class DaoAuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider {
 
 	private static final String USERNAME_CANNOT_BE_NULL = "Username cannot be null";
 	private static final String CREDENTIALS_CANNOT_BE_NULL = "Credentials cannot be null";
@@ -22,7 +22,7 @@ public class AuthenticationProvider implements org.springframework.security.auth
 	private PasswordEncoder passwordEncoder;
 
 	@Autowired
-	public AuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+	public DaoAuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
 		this.userDetailsService = userDetailsService;
 		this.passwordEncoder = passwordEncoder;
 	}
@@ -34,9 +34,10 @@ public class AuthenticationProvider implements org.springframework.security.auth
 		Assert.notNull(name, USERNAME_CANNOT_BE_NULL);
 		Assert.notNull(credentials, CREDENTIALS_CANNOT_BE_NULL);
 
-		if (credentials instanceof String) return null;
+		if (!(credentials instanceof String)) return null;
 
 		String password = credentials.toString();
+		System.out.println(password);
 		UserDetails userDetails = userDetailsService.loadUserByUsername(name);
 		boolean passwordMatch = passwordEncoder.matches(password, userDetails.getPassword());
 

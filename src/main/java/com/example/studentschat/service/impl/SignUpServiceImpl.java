@@ -1,6 +1,6 @@
 package com.example.studentschat.service.impl;
 
-import com.example.studentschat.entity.User;
+import com.example.studentschat.entity.user.User;
 import com.example.studentschat.repository.UserRepository;
 import com.example.studentschat.service.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class SignUpServiceImpl implements SignUpService {
 
 	@Override
 	public User signUpUser(User user) {
-		Assert.isNull(user.getIdUser(), "Can't sign up given user, it already has set id. User: " + user.toString());
+		Assert.isNull(user.getId(), "Can't sign up given user, it already has set id. User: " + user.toString());
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		User savedUser = userRepository.save(user);
 		return savedUser;
