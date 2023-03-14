@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
+
 @Service
 public class JpaUserDetailsService implements UserDetailsService {
 	
@@ -29,7 +31,7 @@ public class JpaUserDetailsService implements UserDetailsService {
 		User user = usernameOptional.get();
 		return user;
 	}
-	
-	
+
+
 
 }
