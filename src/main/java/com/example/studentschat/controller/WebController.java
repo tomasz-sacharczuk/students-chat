@@ -39,6 +39,20 @@ public class WebController {
 
 		return mav;
 	}
+
+	@RequestMapping(value="/groups", method=RequestMethod.GET)
+	public ModelAndView groups(ModelAndView mav) {
+		mav.setViewName("groups");
+
+		return mav;
+	}
+
+	@RequestMapping(value="/group_changes", method=RequestMethod.GET)
+	public ModelAndView groupChanges(ModelAndView mav) {
+		mav.setViewName("group_changes");
+
+		return mav;
+	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public ModelAndView login(ModelAndView mav) {

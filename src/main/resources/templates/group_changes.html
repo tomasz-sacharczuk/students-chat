@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/starter.css">
 
-    <title>Moja grupa</title>
+    <title>Zmiany grup</title>
   </head>
   <body>
     <!-- navbar start -->
@@ -23,14 +23,14 @@
           <li class="nav-item">
             <a class="nav-link" href="/user_panel">Strona głowna<span class="sr-only">(current)</span></a>
           </li>
-          <li sec:authorize="hasAuthority('USER')" class="nav-item active">
-            <a class="nav-link" href="#">Moja grupa</a>
+          <li sec:authorize="hasAuthority('USER')" class="nav-item">
+            <a class="nav-link" href="/user_group">Moja grupa</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/groups">Wszystkie grupy</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/group_changes">Zmiany grup</a>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Zmiany grup</a>
           </li>
         </ul>
 		<form action="/user_logout" method='POST'>
@@ -39,14 +39,17 @@
 		</form>
       </div>
     </nav>
-   <div class="container">
+	
+   <div sec:authorize="hasAuthority('USER')" class="container">
+   	<h4>Prośby wysłane do Ciebie</h4>
     <table class="table">
 	<thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
       <th scope="col">Imię</th>
       <th scope="col">Nazwisko</th>
-      <th scope="col">Akcje</th>
+      <th scope="col">Grupa</th>
+	  <th scope="col"></th>
     </tr>
 	</thead>
   <tbody>
@@ -54,17 +57,65 @@
       <th scope="row">1</th>
       <td>Adam</td>
       <td>K*****</td>
-      <td> <button type="button" class="btn btn-primary btn-sm">Czat prywatny</button></td>
+	  <td>Grupa 2</td>
+      <td>
+		<button type="button" class="btn btn-success btn-sm">Akceptuj zmianę</button>
+		<button type="button" class="btn btn-danger btn-sm">Odrzuć</button>	
+	  </td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Piotr</td>
-      <td>Z*****</td>
-      <td> <button type="button" class="btn btn-primary btn-sm">Czat prywatny</button></td>
-    </tr>
-  </tbody>
-</table>
+   </tbody>
+	</table>
    </div>
+   
+   <div sec:authorize="hasAuthority('USER')" class="container">
+   	<h4>Prośby wysłane przez Ciebie</h4>
+    <table class="table">
+	<thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Imię</th>
+      <th scope="col">Nazwisko</th>
+      <th scope="col">Grupa</th>
+	  <th scope="col">Status</th>
+    </tr>
+	</thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Adam</td>
+      <td>K*****</td>
+	  <td>Grupa 2</td>
+      <td>Oczekuje na akceptację opiekuna</td>
+    </tr>
+   </tbody>
+	</table>
+   </div>
+   
+   <div sec:authorize="hasAuthority('ADMIN')" class="container">
+   	<h4>Prośby o akceptację zmiany</h4>
+    <table class="table">
+	<thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Osoba 1</th>
+      <th scope="col">Osoba 2</th>
+	  <th scope="col"></th>
+    </tr>
+	</thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Adam Kowalski Grupa 2</td>
+      <td>Karol Nowak Grupa 1</td>
+      <td>
+		<button type="button" class="btn btn-success btn-sm">Akceptuj zmianę</button>
+		<button type="button" class="btn btn-danger btn-sm">Odrzuć</button>	
+	  </td>
+    </tr>
+   </tbody>
+	</table>
+   </div>
+   
    <!-- main content ends -->
 
    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

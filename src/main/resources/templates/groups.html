@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/starter.css">
 
-    <title>Moja grupa</title>
+    <title>Wszystkie grupy</title>
   </head>
   <body>
     <!-- navbar start -->
@@ -23,11 +23,11 @@
           <li class="nav-item">
             <a class="nav-link" href="/user_panel">Strona głowna<span class="sr-only">(current)</span></a>
           </li>
-          <li sec:authorize="hasAuthority('USER')" class="nav-item active">
-            <a class="nav-link" href="#">Moja grupa</a>
+          <li sec:authorize="hasAuthority('USER')" class="nav-item">
+            <a class="nav-link" href="/user_group">Moja grupa</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/groups">Wszystkie grupy</a>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Wszystkie grupy</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/group_changes">Zmiany grup</a>
@@ -42,6 +42,7 @@
    <div class="container">
     <table class="table">
 	<thead class="thead-dark">
+	Nazwa grupy
     <tr>
       <th scope="col">#</th>
       <th scope="col">Imię</th>
@@ -54,16 +55,90 @@
       <th scope="row">1</th>
       <td>Adam</td>
       <td>K*****</td>
-      <td> <button type="button" class="btn btn-primary btn-sm">Czat prywatny</button></td>
+      <td>
+		<button type="button" class="btn btn-primary btn-sm">Czat prywatny</button>
+		<button sec:authorize="hasAuthority('USER')" type="button" class="btn btn-secondary btn-sm">Prośba o wymianę grupy</button>	
+	  </td>
     </tr>
     <tr>
       <th scope="row">2</th>
       <td>Piotr</td>
       <td>Z*****</td>
-      <td> <button type="button" class="btn btn-primary btn-sm">Czat prywatny</button></td>
+      <td>
+		<button type="button" class="btn btn-primary btn-sm">Czat prywatny</button>
+		<button sec:authorize="hasAuthority('USER')" type="button" class="btn btn-secondary btn-sm">Prośba o wymianę grupy</button>	
+	  </td>
     </tr>
   </tbody>
-</table>
+	</table>
+   </div>
+   
+   <div class="container">
+    <table class="table">
+	<thead class="thead-dark">
+	Nazwa grupy
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Imię</th>
+      <th scope="col">Nazwisko</th>
+      <th scope="col">Akcje</th>
+    </tr>
+	</thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Adam</td>
+      <td>K*****</td>
+      <td>
+		<button type="button" class="btn btn-primary btn-sm">Czat prywatny</button>
+		<button sec:authorize="hasAuthority('USER')" type="button" class="btn btn-secondary btn-sm">Prośba o wymianę grupy</button>	
+	  </td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Piotr</td>
+      <td>Z*****</td>
+      <td>
+		<button type="button" class="btn btn-primary btn-sm">Czat prywatny</button>
+		<button sec:authorize="hasAuthority('USER')" type="button" class="btn btn-secondary btn-sm">Prośba o wymianę grupy</button>	
+	  </td>
+    </tr>
+  </tbody>
+	</table>
+   </div>
+   
+   <div class="container">
+    <table class="table">
+	<thead class="thead-dark">
+	Nazwa grupy
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Imię</th>
+      <th scope="col">Nazwisko</th>
+      <th scope="col">Akcje</th>
+    </tr>
+	</thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Adam</td>
+      <td>K*****</td>
+      <td>
+		<button type="button" class="btn btn-primary btn-sm">Czat prywatny</button>
+		<button sec:authorize="hasAuthority('USER')" type="button" class="btn btn-secondary btn-sm">Prośba o wymianę grupy</button>	
+	  </td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Piotr</td>
+      <td>Z*****</td>
+      <td>
+		<button type="button" class="btn btn-primary btn-sm">Czat prywatny</button>
+		<button sec:authorize="hasAuthority('USER')" type="button" class="btn btn-secondary btn-sm">Prośba o wymianę grupy</button>	
+	  </td>
+    </tr>
+  </tbody>
+	</table>
    </div>
    <!-- main content ends -->
 

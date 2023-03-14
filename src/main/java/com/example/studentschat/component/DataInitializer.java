@@ -37,7 +37,6 @@ public class DataInitializer {
         userRoles.add(userRole);
         Set<Role> adminRoles = new HashSet<>();
         adminRoles.add(adminRole);
-        adminRoles.add(userRole);
 
         userRepository.save(new User("user",passwordEncoder.encode("user"),
                 userRoles));
