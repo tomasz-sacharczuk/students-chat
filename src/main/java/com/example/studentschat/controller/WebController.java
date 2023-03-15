@@ -25,11 +25,11 @@ public class WebController {
 		mav.addObject("userName",username);
 		return mav;
 	}
-	
+
 	@RequestMapping(value="/admin_panel", method=RequestMethod.GET)
 	public ModelAndView adminPanel(ModelAndView mav) {
 		mav.setViewName("admin_panel");
-		
+
 		return mav;
 	}
 
@@ -53,11 +53,11 @@ public class WebController {
 
 		return mav;
 	}
-	
+
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public ModelAndView login(ModelAndView mav) {
 		mav.setViewName("login");
-		
+
 		return mav;
 	}
 

@@ -24,10 +24,10 @@ public class SignUpController {
 
 	@PostMapping("/api/sign_up")
 	public String signUp(String username, String password) {
-		Set<Role> userRoles = new HashSet<>();
-		userRoles.add(new Role("USER"));
-		User userToSignUp = new User(username, password, userRoles);
-		signUpService.signUpUser(userToSignUp);
+//		Set<Role> userRoles = new HashSet<>();
+//		userRoles.add(new Role("USER"));
+//		User userToSignUp = new User(username, password, userRoles);
+//		signUpService.signUpUser(userToSignUp);
 		return "User signed up";
 	}
 

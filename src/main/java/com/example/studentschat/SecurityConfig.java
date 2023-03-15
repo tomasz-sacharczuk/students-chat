@@ -37,8 +37,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
+				.antMatchers("/h2_console/**").permitAll()
 			.antMatchers("/login").permitAll()
 			.antMatchers("/css/**").permitAll()
+			.antMatchers("/admin_panel").hasAuthority("ADMIN")
 				.antMatchers("/user_group").hasAnyAuthority("ADMIN","USER")
 			.anyRequest().authenticated()
 			.and()
@@ -51,8 +53,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.logout()
 			.logoutUrl("/user_logout")
 			.logoutSuccessUrl("/login?logout")
-			.deleteCookies("cookies");
-	
+			.deleteCookies("cookies")
+				.and().csrf().ignoringAntMatchers("/h2-console/**");
+		http.headers().frameOptions().disable();
+
 	}
 
 	@Bean

@@ -1,16 +1,17 @@
 package com.example.studentschat.entity.user;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "roles")
 @NoArgsConstructor
-public class Role implements GrantedAuthority {
+public class Role {
     @Column(name="role_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +20,5 @@ public class Role implements GrantedAuthority {
 
     public Role(String name){
         this.name = name;
-    }
-
-    @Override
-    public String getAuthority() {
-        return null;
     }
 }

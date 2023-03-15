@@ -4,14 +4,18 @@ import java.util.*;
 
 import javax.persistence.*;
 
-import lombok.Data;
+import com.example.studentschat.entity.ChangeGroupRequest;
+import com.example.studentschat.entity.Group;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "users")
 @NoArgsConstructor
 public class User implements UserDetails {
@@ -30,10 +34,20 @@ public class User implements UserDetails {
 	)
 	private Set<Role> roles = new HashSet<>();
 
-	public User(String username, String password, Set<Role> roles) {
+	@OneToOne(mappedBy="requestedByUser")
+	private ChangeGroupRequest changeGroupByRequest;
+
+	@OneToOne(mappedBy="requestedToUser")
+	private ChangeGroupRequest changeGroupToRequest;
+
+	@ManyToOne
+	@JoinColumn(name = "group_id")
+	private Group group;
+
+	public User(String username, String password, Group group) {
 		this.username = username;
 		this.password = password;
-		this.roles = roles;
+		this.group = group;
 	}
 
 	@Override
