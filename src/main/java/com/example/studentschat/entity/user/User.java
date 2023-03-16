@@ -26,6 +26,8 @@ public class User implements UserDetails {
 	private Long id;
 	private String username;
 	private String password;
+	private String name;
+	private String surname;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "users_roles",
@@ -44,7 +46,9 @@ public class User implements UserDetails {
 	@JoinColumn(name = "group_id")
 	private Group group;
 
-	public User(String username, String password, Group group) {
+	public User(String username, String password, Group group, String name, String surname) {
+		this.name = name;
+		this.surname = surname;
 		this.username = username;
 		this.password = password;
 		this.group = group;
@@ -91,4 +95,11 @@ public class User implements UserDetails {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "User{" +
+				"name='" + name + '\'' +
+				", surname='" + surname + '\'' +
+				'}';
+	}
 }

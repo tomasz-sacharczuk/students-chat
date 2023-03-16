@@ -29,7 +29,5 @@ public class JpaUserDetailsService implements UserDetailsService {
 		User user = usernameOptional.get();
 		return user;
 	}
-	
-	
 
 }

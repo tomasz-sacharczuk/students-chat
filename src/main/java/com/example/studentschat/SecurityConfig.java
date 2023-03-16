@@ -38,8 +38,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.antMatchers("/h2_console/**").permitAll()
+				.antMatchers("/ws").permitAll()
+				.antMatchers("/app").permitAll()
+				.antMatchers("/topic/**").permitAll()
+				.antMatchers("/chat.sendMessage").permitAll()
+				.antMatchers("/chat").permitAll()
+				.antMatchers("/chat.addUser").permitAll()
 			.antMatchers("/login").permitAll()
 			.antMatchers("/css/**").permitAll()
+			.antMatchers("/js/**").permitAll()
 			.antMatchers("/admin_panel").hasAuthority("ADMIN")
 				.antMatchers("/user_group").hasAnyAuthority("ADMIN","USER")
 			.anyRequest().authenticated()
@@ -54,7 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.logoutUrl("/user_logout")
 			.logoutSuccessUrl("/login?logout")
 			.deleteCookies("cookies")
-				.and().csrf().ignoringAntMatchers("/h2-console/**");
+				.and()
+				.csrf().disable();
 		http.headers().frameOptions().disable();
 
 	}

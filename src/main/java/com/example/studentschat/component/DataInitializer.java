@@ -57,16 +57,26 @@ public class DataInitializer {
         groupRepository.save(groupB);
 
         User user = new User("user",passwordEncoder.encode("user"),
-                groupA);
+                groupA,"Thomas","Werner");
         user.getRoles().add(userRole);
         groupA.getGroupUsers().add(user);
 
         User admin = new User("admin",passwordEncoder.encode("admin"),
-                groupB);
+                groupB,"Christopher","Barteczko");
         admin.getRoles().add(adminRole);
         groupB.getGroupUsers().add(admin);
 
+        User user2 = new User("user2",passwordEncoder.encode("user2"),
+                groupA,"Peter","Gakko");
+        user2.getRoles().add(userRole);
+
+        groupA.getGroupUsers().add(user2);
+
+        groupRepository.save(groupA);
+        groupRepository.save(groupB);
+
         userRepository.save(user);
+        userRepository.save(user2);
         userRepository.save(admin);
 
         ChangeGroupRequest changeGroupRequest = new ChangeGroupRequest(user,admin);
