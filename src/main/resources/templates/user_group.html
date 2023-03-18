@@ -14,7 +14,8 @@
 <!-- navbar start -->
 <div th:replace="menu.html :: menu(selected='user_group')"></div>
 <div class="container">
-  <h3><span th:text="${'Grupa: '+group.name}" /></h3>
+  <h3><span style="float:left;"  th:text="${'Grupa: '+group.name}"/></h3>
+  <h4><span style="float:right;"  th:text="${'Liczba osób w grupie: '+ group.groupUsers.size()+'/'+group.limit}"/></h4
   <table class="table">
     <thead class="thead-dark">
     <tr>

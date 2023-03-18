@@ -63,6 +63,9 @@ public class User implements UserDetails {
 	@Transient
 	private Long groupId;
 
+	@Transient
+	private String userCredentials;
+
 	@ManyToOne
 	@JoinColumn(name = "group_id")
 	private Group group;
@@ -126,22 +129,28 @@ public class User implements UserDetails {
 				'}';
 	}
 
+	public boolean hasAdminRole(){
+		for (Role role : roles){
+			if (role.getName().equals("ADMIN")) return true;
+		}
+		return false;
+	}
+
 	public boolean anyActiveRequestExists() {
-		boolean activeRequestExist = false;
 		for(ChangeGroupRequest req: changeGroupByRequests){
 			if(req.getStatus()==ChangeGroupRequest.STATUS_NEW ||
 					req.getStatus()==ChangeGroupRequest.STATUS_ACCEPTED_BY_USER){
-				activeRequestExist=true;
+				return true;
 			}
 		};
 
 		for(ChangeGroupRequest req: changeGroupToRequests){
 			if(req.getStatus()==ChangeGroupRequest.STATUS_NEW ||
 					req.getStatus()==ChangeGroupRequest.STATUS_ACCEPTED_BY_USER){
-				activeRequestExist=true;
+				return true;
 			}
 		};
-		return activeRequestExist;
+		return false;
 	}
 
 	public String getHiddenSurname(){

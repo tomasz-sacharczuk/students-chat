@@ -1,5 +1,6 @@
 package com.example.studentschat.controller;
 
+import com.example.studentschat.entity.AlertMessage;
 import com.example.studentschat.entity.Group;
 import com.example.studentschat.entity.user.User;
 import com.example.studentschat.service.impl.GroupService;
@@ -66,9 +67,11 @@ public class SignUpController {
 			modelAndView.addObject("groups", groupService.getAllGroups());
 			modelAndView.setViewName("signUpForm");
 		} else {
-			user.setGroup(groupService.getGroupById(groupId));
-			signUpService.signUpUser(user);
-			modelAndView.setViewName("user_panel");
+			modelAndView.addObject("user", new User());
+			modelAndView.addObject("groups", groupService.getAllGroups());
+			AlertMessage message = new AlertMessage(AlertMessage.CREATE_USER_SUCCESSFUL_CODE);
+			modelAndView.addObject("message", message);
+			modelAndView.setViewName("signUpForm");
 		}
 		return modelAndView;
 

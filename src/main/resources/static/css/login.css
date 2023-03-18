@@ -22,14 +22,6 @@ body {
     text-align: justify;
 }
 
-/* Text Color */
-.text-whitesmoke {
-    color: whitesmoke
-}
-.text-darkyellow {
-    color: rgba(255, 235, 59, 0.432)
-}
-
 /* Lines */
 
 .line-b {
@@ -173,7 +165,7 @@ body {
     background: #a4b0aa;
 }
 
-/* Login & Register Pages*/
+/* Login Page*/
 
 .login-container {
     max-width: 400px;

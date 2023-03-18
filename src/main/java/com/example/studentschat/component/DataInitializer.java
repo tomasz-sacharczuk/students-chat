@@ -50,45 +50,69 @@ public class DataInitializer {
         Set<Role> adminRoles = new HashSet<>();
         adminRoles.add(adminRole);
 
-        Group groupA = new Group("A",2);
-        Group groupB = new Group("B",10);
+        Group groupA = new Group("A",14);
+        Group groupB = new Group("B",12);
+        Group groupC = new Group("C",15);
+        Group groupD = new Group("D",13);
+
         groupRepository.save(groupA);
         groupRepository.save(groupB);
-
-        User user = new User("user",passwordEncoder.encode("user"),
-                groupA,"Thomas","Werner");
-        user.getRoles().add(userRole);
-        groupA.getGroupUsers().add(user);
+        groupRepository.save(groupC);
+        groupRepository.save(groupD);
 
         User admin = new User("admin",passwordEncoder.encode("admin"),
-                groupB,"Christopher","Barteczko");
+                null,"Klaudiusz","Czerwiński");
         admin.getRoles().add(adminRole);
-        groupB.getGroupUsers().add(admin);
-
-        User user2 = new User("user2",passwordEncoder.encode("user2"),
-                groupA,"Peter","Gakko");
-        user2.getRoles().add(userRole);
-
-        groupA.getGroupUsers().add(user2);
-
-        groupRepository.save(groupA);
-        groupRepository.save(groupB);
-
-        LocalDateTime now = LocalDateTime.now();
-        user.setChatBanEndTime(now.plusMinutes(2));
-
-        userRepository.save(user);
-        userRepository.save(user2);
         userRepository.save(admin);
 
-        ChangeGroupRequest changeGroupRequest = new ChangeGroupRequest(user,admin);
+        addUser(groupA,"Korneliusz Marciniak",userRole);
+        addUser(groupA,"Bogumił Czerwiński",userRole);
+        addUser(groupA,"Alan Lis",userRole);
+        addUser(groupA,"Ignacy Kubiak",userRole);
+        addUser(groupA,"Radosław Witkowski",userRole);
+        addUser(groupA,"Milan Piotrowski",userRole);
+        addUser(groupA,"Miron Kozłowski",userRole);
 
-        changeGroupRequestRepository.save(changeGroupRequest);
+        addUser(groupB,"Łukasz Zakrzewska",userRole);
+        addUser(groupB,"Mikołaj Kowalczyk",userRole);
+        addUser(groupB,"Błażej Brzeziński",userRole);
+        addUser(groupB,"Fabian Jasiński",userRole);
+        addUser(groupB,"Korneliusz Zakrzewska",userRole);
+        addUser(groupB,"Marcin Kwiatkowski",userRole);
+        addUser(groupB,"Ryszard Włodarczyk",userRole);
+        addUser(groupB,"Mieszko Andrzejewski",userRole);
+        addUser(groupB,"Bruno Włodarczyk",userRole);
+        addUser(groupB,"Kajetan Lis",userRole);
 
-        user.getChangeGroupByRequests().add(changeGroupRequest);
-        admin.getChangeGroupToRequests().add(changeGroupRequest);
+        addUser(groupC,"Aureliusz Kołodziej",userRole);
+        addUser(groupC,"Juliusz Jakubowski",userRole);
+        addUser(groupC,"Amadeusz Baran",userRole);
+        addUser(groupC,"Marcin Rutkowski",userRole);
+        addUser(groupC,"Joachim Laskowska",userRole);
+        addUser(groupC,"Anastazy Kaczmarczyk",userRole);
+        addUser(groupC,"Cezary Chmielewski",userRole);
+        addUser(groupC,"Natan Mazur",userRole);
+        addUser(groupC,"Fryderyk Wiśniewski",userRole);
 
+        addUser(groupD,"Karol Głowacka",userRole);
+        addUser(groupD,"Adam Jasiński",userRole);
+        addUser(groupD,"Ryszard Zakrzewska",userRole);
+        addUser(groupD,"Robert Nowak",userRole);
+        addUser(groupD,"Leonardo Wojciechowski",userRole);
+        addUser(groupD,"Alojzy Krawczyk",userRole);
+        addUser(groupD,"Albert Wysocki",userRole);
+
+    }
+
+    private void addUser(Group group, String fullname, Role role) {
+        String[] fullnameSplitted = fullname.split(" ");
+        String name = fullnameSplitted[0];
+        String surname = fullnameSplitted[1];
+        User user = new User(name.substring(0,1)+surname,passwordEncoder.encode("user"),
+                group,name,surname);
+        user.getRoles().add(role);
+        group.getGroupUsers().add(user);
         userRepository.save(user);
-        userRepository.save(admin);
+        groupRepository.save(group);
     }
 }

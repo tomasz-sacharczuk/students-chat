@@ -14,10 +14,10 @@
 <!-- navbar start -->
 <div th:replace="menu.html :: menu(selected='group_changes')"></div>
 
-<div th:if="${message != null}" th:classappend="${message.getType() == 1} ? 'alert alert-success' : 'alert alert-danger'" role="alert">
+<div th:if="${message != null}" th:classappend="${message.getType() == 1} ? 'alert alert-success' : 'alert alert-danger'" role="alert" style="margin-top: 15px;">
     <span th:text="${message.getMessage()}"></span>
 </div>
-<div th:if="${requestsTo.size() >0}" sec:authorize="hasAuthority('USER')" class="container">
+<div th:if="${requestsTo.size() >0}" sec:authorize="hasAuthority('USER')" class="container-fluid" style="margin-top: 15px;">
     <h4>Prośby wysłane do Ciebie</h4>
     <table class="table">
         <thead class="thead-dark">
@@ -32,7 +32,7 @@
         <tbody>
         <tr th:if="${request.getStatus()==1 || request.getStatus()==2}" th:each="request : ${requestsTo}">
             <td th:text="${request.getRequestedByUser().getName()}">name</td>
-            <td th:text="${request.getRequestedByUser().getSurname()}">surname</td>
+            <td th:text="${request.getRequestedByUser().getHiddenSurname()}">surname</td>
             <td th:text="${request.getRequestedByUser().getGroup().getName()}">name</td>
             <td th:block th:switch="${request.status}">
                 <div th:case=1>
@@ -53,11 +53,11 @@
     </table>
 </div>
 
-<div th:if="${requestsBy.size() == 0 && requestsTo.size() == 0}" sec:authorize="hasAuthority('USER')" class="container">
+<div th:if="${requestsBy.size() == 0 && requestsTo.size() == 0}" sec:authorize="hasAuthority('USER')" class="container" style="margin-top: 15px;">
     <h4>Brak aktywnych zmian</h4>
 </div>
 
-<div th:if="${requestsBy.size()>0}" sec:authorize="hasAuthority('USER')" class="container">
+<div th:if="${requestsBy.size()>0}" sec:authorize="hasAuthority('USER')" class="container" style="margin-top: 15px;">
     <h4>Prośby wysłane przez Ciebie</h4>
     <table class="table">
         <thead class="thead-dark">
@@ -71,7 +71,7 @@
         <tbody>
         <tr th:classappend = "|${request.status==4 ? 'table-success' : ''} ${request.status==3 || request.status==5 ? 'table-danger' : ''}|" th:each="request : ${requestsBy}">
             <td th:text="${request.getRequestedToUser().getName()}">name</td>
-            <td th:text="${request.getRequestedToUser().getSurname()}">surname</td>
+            <td th:text="${request.getRequestedByUser().getHiddenSurname()}">surname</td>
             <td th:text="${request.getRequestedToUser().getGroup().getName()}">name</td>
             <td th:block th:switch="${request.status}">
                 <div th:case=1>
@@ -95,11 +95,11 @@
     </table>
 </div>
 
-<div th:if="${requestsForAdmin.size() == 0}" sec:authorize="hasAuthority('ADMIN')" class="container">
+<div th:if="${requestsForAdmin.size() == 0}" sec:authorize="hasAuthority('ADMIN')" class="container" style="margin-top: 15px;">
     <h4>Brak nowych zgłoszeń</h4>
 </div>
 
-<div th:if="${requestsForAdmin.size() > 0}" sec:authorize="hasAuthority('ADMIN')" class="container">
+<div th:if="${requestsForAdmin.size() > 0}" sec:authorize="hasAuthority('ADMIN')" class="container" style="margin-top: 15px;">
     <h4>Prośby o akceptację zmiany</h4>
     <table class="table">
         <thead class="thead-dark">

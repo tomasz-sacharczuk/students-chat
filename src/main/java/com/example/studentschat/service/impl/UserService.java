@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,6 +65,18 @@ public class UserService {
             return false;
         }
         return true;
+    }
+
+    public List<User> getAllUsers(){
+        List<User> usersList = (List<User>) userRepository.findAll();
+        if (usersList.isEmpty()) return Collections.EMPTY_LIST;
+        return usersList;
+    }
+
+    public List<User> getAllUsersWithCredentials(){
+        List<User> usersList = getAllUsers();
+        usersList.forEach(user -> user.setUserCredentials(getUserCredentialsWithFirstLetterOfSurname(user)));
+        return usersList;
     }
 
     public void saveUser(User user){

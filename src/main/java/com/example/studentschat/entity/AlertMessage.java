@@ -8,10 +8,12 @@ public class AlertMessage {
     public static final String CREATE_REQUEST_FAILED_MESSAGE = "Wystąpił błąd podczas wysłania wniosku";
     public static final String ACCEPT_REQUEST_FAILED_MESSAGE = "Wystąpił błąd podczas akceptowania zmiany grupy";
     public static final String REJECT_REQUEST_SUCCESS_MESSAGE = "Pomyślnie odrzucono wniosek";
+    private static final String CREATE_USER_SUCCESSFUL = "Pomyślnie utworzono nowego użytkownika";
 
     public static final int CREATE_REQUEST_SUCCESS_MESSAGE_CODE = 100;
     public static final int ACCEPT_REQUEST_SUCCESS_MESSAGE_CODE = 101;
     public static final int REJECT_REQUEST_SUCCESS_MESSAGE_CODE = 102;
+    public static final int CREATE_USER_SUCCESSFUL_CODE = 103;
     public static final int CREATE_REQUEST_FAILED_MESSAGE_CODE = 200;
     public static final int ACCEPT_REQUEST_FAILED_MESSAGE_CODE = 201;
 
@@ -20,6 +22,7 @@ public class AlertMessage {
         alertsMessagesMap.put(CREATE_REQUEST_SUCCESS_MESSAGE_CODE,CREATE_REQUEST_SUCCESS_MESSAGE);
         alertsMessagesMap.put(ACCEPT_REQUEST_SUCCESS_MESSAGE_CODE,ACCEPT_REQUEST_SUCCESS_MESSAGE);
         alertsMessagesMap.put(REJECT_REQUEST_SUCCESS_MESSAGE_CODE,REJECT_REQUEST_SUCCESS_MESSAGE);
+        alertsMessagesMap.put(CREATE_USER_SUCCESSFUL_CODE,CREATE_USER_SUCCESSFUL);
         alertsMessagesMap.put(CREATE_REQUEST_FAILED_MESSAGE_CODE,CREATE_REQUEST_FAILED_MESSAGE);
         alertsMessagesMap.put(ACCEPT_REQUEST_FAILED_MESSAGE_CODE,ACCEPT_REQUEST_FAILED_MESSAGE);
     }

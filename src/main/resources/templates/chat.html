@@ -5,6 +5,7 @@
     <title>Public Chat</title>
     <link rel="stylesheet" href="/css/chat.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <noscript>
@@ -19,10 +20,10 @@
 <div id="chat-page">
     <div class="chat-container">
         <div class="chat-header">
-            <h2>Czat publiczny</h2>
+            <h2>Czat</h2>
         </div>
         <div class="connecting">
-            łączenie ...
+            Łączenie ...
         </div>
         <ul id="messageArea">
 
@@ -35,10 +36,16 @@
                 </div>
             </div>
         </form>
+
         <form id="banForm" name="banForm">
             <div class="form-group">
                 <div class="input-group clearfix">
-                    <button type="submit" class="primary">Ban user</button>
+                    <select id="userToBeBannedSelect">
+                        <option th:each="user : ${users}" th:value="${user.username}"
+                                th:text="${user.userCredentials}"></option>
+                    </select>
+                    <input type="number" id="banLengthInput" value="15">
+                    <button type="submit" class="primary">Zbanuj użytkownika</button>
                 </div>
             </div>
         </form>

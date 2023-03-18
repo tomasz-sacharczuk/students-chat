@@ -38,6 +38,11 @@ public class WebController {
 		this.statusProvider = statusProvider;
 	}
 
+	@RequestMapping("/")
+	void redirect (HttpServletResponse response) throws IOException {
+		response.sendRedirect("/user_panel");
+	}
+
 	@RequestMapping(value="/user_panel", method=RequestMethod.GET)
 	public ModelAndView userPanel(ModelAndView mav) {
 		User currentUser = userService.getCurrentUser();

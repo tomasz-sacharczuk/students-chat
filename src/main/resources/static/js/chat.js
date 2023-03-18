@@ -10,7 +10,6 @@ var connectingElement = document.querySelector('.connecting');
 var stompClient = null;
 var username = null;
 var credentials = null;
-
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
@@ -69,8 +68,11 @@ function sendMessage(event) {
 
 function banUser(event) {
     if(stompClient) {
+        var credentials = $( "#userToBeBannedSelect option:selected" ).text();
+        var username = $( "#userToBeBannedSelect option:selected" ).val();
+        var banLength = $( "#banLengthInput").val();
         var banMessage = {
-            content: 'user2,15,Peter G.',
+            content: username + ',' + banLength + ',' + credentials,
             type: 'BAN_REQUEST'
         };
         stompClient.send("/app/chat.banUser", {}, JSON.stringify(banMessage));
@@ -146,6 +148,22 @@ function getAvatarColor(messageSender) {
     return colors[index];
 }
 
+function displayBanModal(){
+    $('.banModal').modal('show');
+}
+
 $(document).ready(connect);
 messageForm.addEventListener('submit', sendMessage, true);
-banForm.addEventListener('submit', banUser, true )
+banForm.addEventListener('submit', banUser, true );
+
+/*
+$(document).ready(function() {
+    $(".ban_icon-container").hover(
+        function () {
+            $(".banIcon").removeAttribute('hidden');
+        },
+        function () {
+           $(".banIcon").setAttribute('hidden','');
+        }
+    );
+});*/

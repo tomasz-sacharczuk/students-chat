@@ -16,11 +16,12 @@
 <div th:if="${message != null}" th:classappend="${message.getType() == 1} ? 'alert alert-success' : 'alert alert-danger'" role="alert">
     <span th:text="${message.getMessage()}"></span>
 </div>
-
+<div class="margin" style="margin-top: 15px;"></div>
 <div class="container" th:each="group : ${groups}">
     <table class="table">
         <thead class="thead-dark">
-        <h3><span th:text="${'Grupa: '+group.name}" /></h3>
+        <h3><span style="float:left;"  th:text="${'Grupa: '+group.name}"/></h3>
+        <h4><span style="float:right;"  th:text="${'Liczba osób w grupie: '+ group.groupUsers.size()+'/'+group.limit}"/></h4>
         <tr>
             <th style="width: 40%" scope="col">Imię</th>
             <th style="width: 40%" scope="col">Nazwisko</th>

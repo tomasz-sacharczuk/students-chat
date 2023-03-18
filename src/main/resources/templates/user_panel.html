@@ -14,7 +14,7 @@
 <div th:replace="menu.html :: menu(selected='user_panel')"></div>
 <!-- navbar ends -->
 <!-- main content start -->
-<div class="container">
+<div class="container container-fluid">
 	<div class="jumbotron mt-5 rounded-0">
 		<h1 class="display-4"><span th:text="${'Witaj '+currentUser.getName()}+ ' !'" /></h1>
 	</div>
