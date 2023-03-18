@@ -1,18 +1,14 @@
 package com.example.studentschat.service.impl;
 
 import com.example.studentschat.entity.Group;
-import com.example.studentschat.entity.user.User;
 import com.example.studentschat.repository.GroupRepository;
-import com.example.studentschat.repository.UserRepository;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class GroupService {
@@ -29,10 +25,10 @@ public class GroupService {
         if(groupOptional.isPresent()) {
             return groupOptional.get();
         }
-        throw new ObjectNotFoundException(groupId, "group");
+        throw new EntityNotFoundException("No group found with given id: "+groupId);
     }
 
-    public Iterable<Group> getAllGroups(){
-        return groupRepository.findAll();
+    public List<Group> getAllGroups(){
+        return (List<Group>) groupRepository.findAll();
     }
 }

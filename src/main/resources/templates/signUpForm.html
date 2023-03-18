@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Add user</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="menu.html :: menu(selected='signUpForm')"></div>
+<div class="container">
+    <form id="newUserForm" class="form-horizontal" th:object="${user}"
+          th:action="@{/signUpUser}" th:method="post">
+        <div class="form-group">
+            <label class="control-label">Imie:</label>
+            <input type="text" class="form-control" th:field="*{name}"/>
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Nazwisko:</label>
+            <input type="text" class="form-control" th:field="*{surname}"/>
+            <p th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}" class="error"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Login:</label>
+            <input type="text" class="form-control" th:field="*{username}"/>
+            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"/>
+            <p th:if="${nonUniqueUsernameError}"  th:text="${nonUniqueUsernameError}" class="error"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Hasło:</label>
+            <input type="password" class="form-control" th:field="*{password}"/>
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Grupa:</label>
+            <select th:field="*{groupId}">
+                <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.name}"></option>
+            </select>
+            <p th:if="${groupLimitReachedError}"  th:text="${groupLimitReachedError}" class="error"/>
+        </div>
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary btn-sm">Dodaj studenta</button>
+        </div>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
+</html>

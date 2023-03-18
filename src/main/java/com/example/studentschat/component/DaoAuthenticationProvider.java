@@ -37,7 +37,6 @@ public class DaoAuthenticationProvider implements org.springframework.security.a
 		if (!(credentials instanceof String)) return null;
 
 		String password = credentials.toString();
-		System.out.println(password);
 		UserDetails userDetails = userDetailsService.loadUserByUsername(name);
 		boolean passwordMatch = passwordEncoder.matches(password, userDetails.getPassword());
 

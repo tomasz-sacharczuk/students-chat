@@ -1,5 +1,7 @@
 package com.example.studentschat;
 
+import com.example.studentschat.component.DaoAuthenticationProvider;
+import com.example.studentschat.service.impl.JpaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,9 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import com.example.studentschat.component.DaoAuthenticationProvider;
-import com.example.studentschat.service.impl.JpaUserDetailsService;
 
 @Configuration
 @EnableWebSecurity(debug=false)
@@ -44,10 +43,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/chat.sendMessage").permitAll()
 				.antMatchers("/chat").permitAll()
 				.antMatchers("/chat.addUser").permitAll()
-			.antMatchers("/login").permitAll()
-			.antMatchers("/css/**").permitAll()
-			.antMatchers("/js/**").permitAll()
-			.antMatchers("/admin_panel").hasAuthority("ADMIN")
+				.antMatchers("/login").permitAll()
+				.antMatchers("/css/**").permitAll()
+				.antMatchers("/js/**").permitAll()
+				.antMatchers("/signUpForm").hasAuthority("ADMIN")
+				.antMatchers("/admin_panel").hasAuthority("ADMIN")
 				.antMatchers("/user_group").hasAnyAuthority("ADMIN","USER")
 			.anyRequest().authenticated()
 			.and()
@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.usernameParameter("username")
 			.passwordParameter("password")
 			.defaultSuccessUrl("/user_panel", true)
+			.failureUrl("/login?error=true")
 			.and()
 		.logout()
 			.logoutUrl("/user_logout")

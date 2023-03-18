@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -33,12 +34,7 @@ public class UserService {
         }
 
         Assert.notNull(userName, USERNAME_CANNOT_BE_NULL);
-
-        Optional<User> currentUser = userRepository.findByUsername(userName);
-        if (currentUser.isPresent()) {
-            return currentUser.get();
-        }
-        throw new UsernameNotFoundException("No user found with username: " + userName);
+        return findUserByUsername(userName);
     }
 
     public String getUserCredentialsWithFirstLetterOfSurname(User user){
@@ -47,5 +43,33 @@ public class UserService {
 
         String finalCredentials = user.getName() + " " + user.getSurname().charAt(0) + ".";
         return finalCredentials;
+    }
+
+    public Optional<User> findOptionalUserByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
+    public User findUserByUsername(String userName){
+        Optional<User> userOptional = userRepository.findByUsername(userName);
+        if (userOptional.isPresent()) {
+            return userOptional.get();
+        }
+        throw new UsernameNotFoundException("No user found with username: " + userName);
+    }
+
+    public boolean isUserBanned(User user){
+        if (user.getChatBanEndTime() == null ||
+                (user.getChatBanEndTime() != null && user.getChatBanEndTime().isBefore(LocalDateTime.now()))){
+            return false;
+        }
+        return true;
+    }
+
+    public void saveUser(User user){
+        userRepository.save(user);
+    }
+
+    public User getUserById(Long id) {
+        return userRepository.findById(id).get();
     }
 }

@@ -8,15 +8,14 @@ import com.example.studentschat.repository.ChangeGroupRequestRepository;
 import com.example.studentschat.repository.GroupRepository;
 import com.example.studentschat.repository.RoleRepository;
 import com.example.studentschat.repository.UserRepository;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 @Component
@@ -51,7 +50,7 @@ public class DataInitializer {
         Set<Role> adminRoles = new HashSet<>();
         adminRoles.add(adminRole);
 
-        Group groupA = new Group("A",10);
+        Group groupA = new Group("A",2);
         Group groupB = new Group("B",10);
         groupRepository.save(groupA);
         groupRepository.save(groupB);
@@ -75,6 +74,9 @@ public class DataInitializer {
         groupRepository.save(groupA);
         groupRepository.save(groupB);
 
+        LocalDateTime now = LocalDateTime.now();
+        user.setChatBanEndTime(now.plusMinutes(2));
+
         userRepository.save(user);
         userRepository.save(user2);
         userRepository.save(admin);
@@ -83,8 +85,8 @@ public class DataInitializer {
 
         changeGroupRequestRepository.save(changeGroupRequest);
 
-        user.setChangeGroupByRequest(changeGroupRequest);
-        admin.setChangeGroupToRequest(changeGroupRequest);
+        user.getChangeGroupByRequests().add(changeGroupRequest);
+        admin.getChangeGroupToRequests().add(changeGroupRequest);
 
         userRepository.save(user);
         userRepository.save(admin);

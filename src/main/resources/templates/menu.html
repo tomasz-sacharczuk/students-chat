@@ -1,11 +1,50 @@
-<div class="menu" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-	<div class="menu-separator-v"></div>
-	<a class="menu-element" href="/user_panel">User panel</a>
-	<div sec:authorize="hasAuthority('ADMIN')" class="menu-separator-v"></div>
-	<a sec:authorize="hasAuthority('ADMIN')" class="menu-element" href="/admin_panel">Admin panel</a>
-	<div class="menu-separator-v"></div>
-	<form action="/user_logout" method='POST'>
-		<!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
-		<button class="menu-element unstyled-button" type="submit">Logout</button>
-	</form>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Menu</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:fragment="menu(selected)">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light  ">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li th:class="'nav-item ' + ${selected=='user_panel' ? 'active' : ''}">
+					<a class="nav-link" id="main" th:href="@{(${selected=='user_panel' ? '#' : '/user_panel'})}">
+						Strona główna</a>
+				</li>
+				<li sec:authorize="hasAuthority('USER')"
+					th:class="'nav-item ' + ${selected=='user_group' ? 'active' : ''}">
+					<a class="nav-link" id="user_group" th:href="@{(${selected=='user_group' ? '#' : '/user_group'})}">
+						Moja grupa</a>
+				</li>
+				<li th:class="'nav-item ' + ${selected=='groups' ? 'active' : ''}">
+					<a class="nav-link" id="groups" th:href="@{(${selected=='groups' ? '#' : '/groups'})}">
+						Wszystkie grupy</a>
+				</li>
+				<li th:class="'nav-item ' + ${selected=='group_changes' ? 'active' : ''}">
+					<a class="nav-link" id="group_changes" th:href="@{(${selected=='group_changes' ? '#' : '/group_changes'})}">
+						Zmiany grup</a>
+				</li>
+				<li sec:authorize="hasAuthority('ADMIN')"
+					th:class="'nav-item ' + ${selected=='signUpForm' ? 'active' : ''}">
+					<a class="nav-link" id="signUpForm" th:href="@{(${selected=='signUpForm' ? '#' : '/signUpForm'})}">
+						Nowy użytkownik</a>
+				</li>
+				<li th:class="'nav-item ' + ${selected=='chat' ? 'active' : ''}">
+					<a class="nav-link" id="chat" th:href="@{(${selected=='chat' ? '#' : '/chat'})}">
+						Czat</a>
+				</li>
+			</ul>
+			<form action="/user_logout" method='POST'>
+				<button class="menu-element right btn btn-primary" type="submit">Wyloguj</button>
+			</form>
+		</div>
+	</nav>
 </div>
+</body>
+</html>

@@ -1,6 +1,8 @@
 package com.example.studentschat.component;
 
 import com.example.studentschat.entity.ChatMessage;
+import com.example.studentschat.entity.user.User;
+import com.example.studentschat.service.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import java.time.LocalDateTime;
+
 @Component
 public class WebSocketEventListener {
 
@@ -18,6 +22,9 @@ public class WebSocketEventListener {
 
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
+
+    @Autowired
+    UserService userService;
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
@@ -30,12 +37,14 @@ public class WebSocketEventListener {
 
         String username = (String) headerAccessor.getSessionAttributes().get("username");
         if(username != null) {
-            logger.info("User Disconnected : " + username);
-
             ChatMessage chatMessage = new ChatMessage();
             chatMessage.setType(ChatMessage.MessageType.LEAVE);
+            chatMessage.setSendTime(LocalDateTime.now());
+            User userByUsername = userService.findUserByUsername(username);
+            chatMessage.setCredentials(userService.getUserCredentialsWithFirstLetterOfSurname(userByUsername));
             chatMessage.setSender(username);
 
+            logger.info("User Disconnected : " + username);
             messagingTemplate.convertAndSend("/topic/public", chatMessage);
         }
     }

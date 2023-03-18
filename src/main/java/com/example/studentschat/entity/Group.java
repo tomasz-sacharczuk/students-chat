@@ -1,8 +1,6 @@
 package com.example.studentschat.entity;
 
 import com.example.studentschat.entity.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
