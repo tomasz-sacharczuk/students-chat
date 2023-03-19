@@ -36,7 +36,7 @@ public class ChatController {
         modelAndView.addObject("user",user);
         modelAndView.addObject("userCredentials", userCredentials);
         modelAndView.addObject("chatMessages", chatService.getAllChatMessages());
-        modelAndView.addObject("users", userService.getAllUsersWithCredentials());
+        modelAndView.addObject("hasAdminRole", userService.getCurrentUser().hasAdminRole());
         return modelAndView;
     }
 

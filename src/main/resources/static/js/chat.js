@@ -10,6 +10,8 @@ var connectingElement = document.querySelector('.connecting');
 var stompClient = null;
 var username = null;
 var credentials = null;
+var isAdmin = false;
+
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
@@ -18,6 +20,7 @@ var colors = [
 function connect(event) {
     username = document.querySelector('#username').value.trim();
     credentials = document.querySelector('#credentials').value.trim();
+    isAdmin = document.querySelector('#isAdmin').value.trim();
 
     if(username) {
         var socket = new SockJS('/ws');
@@ -25,7 +28,6 @@ function connect(event) {
         stompClient.debug = null;
         stompClient.connect({}, onConnected, onError);
     }
-    /*event.preventDefault();*/
 }
 
 function onConnected() {
@@ -47,7 +49,7 @@ function onConnected() {
 }
 
 function onError(error) {
-    connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
+    connectingElement.textContent = 'Nie można połączyć się z serwerem WebSocket. Proszę odświeżyć tę stronę, aby spróbować ponownie!';
     connectingElement.style.color = 'red';
 }
 
@@ -68,9 +70,10 @@ function sendMessage(event) {
 
 function banUser(event) {
     if(stompClient) {
-        var credentials = $( "#userToBeBannedSelect option:selected" ).text();
-        var username = $( "#userToBeBannedSelect option:selected" ).val();
-        var banLength = $( "#banLengthInput").val();
+        $("#banModal").modal("hide");
+        var credentials = $("#banUserCredentials").val();
+        var username = $("#userToBeBanned").val();
+        var banLength = $("#banLengthInput").val();
         var banMessage = {
             content: username + ',' + banLength + ',' + credentials,
             type: 'BAN_REQUEST'
@@ -106,6 +109,13 @@ function onMessageReceived(payload) {
     }
 }
 
+function setHiddenInputCommonAttributes(element, value, clazz){
+    element.setAttribute('type', 'text');
+    element.setAttribute('hidden', '');
+    element.setAttribute('value', value);
+    element.setAttribute('class', clazz);
+}
+
 function createCredentialsSection(message, messageElement){
    messageElement.classList.add('chat-message');
 
@@ -113,6 +123,19 @@ function createCredentialsSection(message, messageElement){
    var avatarText = document.createTextNode(message.credentials[0]);
    avatarElement.appendChild(avatarText);
    avatarElement.style['background-color'] = getAvatarColor(message.credentials);
+   if (isAdmin === 'true'){
+       avatarElement.style['cursor'] = 'pointer';
+       avatarElement.setAttribute('class','banModalTrigger');
+       avatarElement.setAttribute('onclick', 'displayBanModal(this)');
+
+       var userBanInput = document.createElement('input');
+       setHiddenInputCommonAttributes(userBanInput, message.sender ,'userBanInput');
+       avatarElement.appendChild(userBanInput);
+
+       var userCredentialsBanInput = document.createElement('input');
+       setHiddenInputCommonAttributes(userCredentialsBanInput, message.credentials ,'userCredentialsBanInput');
+       avatarElement.appendChild(userCredentialsBanInput);
+   }
 
    messageElement.appendChild(avatarElement);
 
@@ -148,22 +171,14 @@ function getAvatarColor(messageSender) {
     return colors[index];
 }
 
-function displayBanModal(){
-    $('.banModal').modal('show');
-}
-
 $(document).ready(connect);
 messageForm.addEventListener('submit', sendMessage, true);
 banForm.addEventListener('submit', banUser, true );
 
-/*
-$(document).ready(function() {
-    $(".ban_icon-container").hover(
-        function () {
-            $(".banIcon").removeAttribute('hidden');
-        },
-        function () {
-           $(".banIcon").setAttribute('hidden','');
-        }
-    );
-});*/
+function displayBanModal(element){
+   $("#banModal").modal("show");
+   var username = $(element).find(".userBanInput").first().val();
+   var credentials = $(element).find(".userCredentialsBanInput").first().val();
+   $("#userToBeBanned").val(username);
+   $("#banUserCredentials").val(credentials);
+}

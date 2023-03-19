@@ -2,10 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>Public Chat</title>
+    <title>Chat</title>
     <link rel="stylesheet" href="/css/chat.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
 </head>
 <body>
 <noscript>
@@ -14,6 +16,7 @@
 
 <input type="text" id="credentials" name="username" th:value="${userCredentials}" class="hidden"/>
 <input type="text" id="username" name="username" th:value="${user.username}" class="hidden"/>
+<input type="text" id="isAdmin" name="isAdmin" th:value="${hasAdminRole}" class="hidden"/>
 
 <div th:replace="menu.html :: menu(selected='chat')"></div>
 
@@ -36,19 +39,33 @@
                 </div>
             </div>
         </form>
+    </div>
+</div>
 
-        <form id="banForm" name="banForm">
-            <div class="form-group">
-                <div class="input-group clearfix">
-                    <select id="userToBeBannedSelect">
-                        <option th:each="user : ${users}" th:value="${user.username}"
-                                th:text="${user.userCredentials}"></option>
-                    </select>
-                    <input type="number" id="banLengthInput" value="15">
-                    <button type="submit" class="primary">Zbanuj użytkownika</button>
-                </div>
+<!-- hidden modal -->
+<div class="modal fade" id="banModal" tabindex="-1" role="dialog" aria-labelledby="banModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Zbanuj użytkownika na podaną liczbę minut</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Zamknij"><span aria-hidden="true">&times;</span></button>
             </div>
-        </form>
+            <div class="modal-body">
+                <form id="banForm" name="banForm">
+                    <div class="form-group">
+                        <div class="input-group clearfix">
+                            <input type="text" id="userToBeBanned" hidden>
+                            <input type="text" id="banUserCredentials" readonly>
+                            <input type="number" id="banLengthInput" value="15" min="1">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                <button type="submit" class="btn btn-primary" form="banForm">Zbanuj</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -56,10 +73,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="/js/chat.js"></script>
 <script type="text/javascript" th:inline="javascript">
   /*<![CDATA[*/
+  isAdmin = document.querySelector('#isAdmin').value.trim();
   var chatMessages = [[${chatMessages}]]
   for (i = 0; i < chatMessages.length; i++) {
      loadPreviousMessages(chatMessages[i]);
