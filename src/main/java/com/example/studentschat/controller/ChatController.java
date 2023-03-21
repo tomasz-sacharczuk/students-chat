@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Controller
@@ -38,6 +40,13 @@ public class ChatController {
         modelAndView.addObject("chatMessages", chatService.getAllChatMessages());
         modelAndView.addObject("hasAdminRole", userService.getCurrentUser().hasAdminRole());
         return modelAndView;
+    }
+
+    @RequestMapping("/chat/deleteMessages")
+    public void deleteMessages(ModelAndView modelAndView, HttpServletResponse response) throws IOException {
+
+        chatService.deleteAllMessages();
+        response.sendRedirect("/chat");
     }
 
     @MessageMapping("/chat.sendMessage")

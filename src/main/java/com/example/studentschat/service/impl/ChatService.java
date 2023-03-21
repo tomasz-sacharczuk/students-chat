@@ -62,4 +62,7 @@ public class ChatService {
         userService.saveUser(userToBeBanned);
     }
 
+    public void deleteAllMessages() {
+        chatRepository.deleteAll();
+    }
 }

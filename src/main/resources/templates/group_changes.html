@@ -71,7 +71,7 @@
         <tbody>
         <tr th:classappend = "|${request.status==4 ? 'table-success' : ''} ${request.status==3 || request.status==5 ? 'table-danger' : ''}|" th:each="request : ${requestsBy}">
             <td th:text="${request.getRequestedToUser().getName()}">name</td>
-            <td th:text="${request.getRequestedByUser().getHiddenSurname()}">surname</td>
+            <td th:text="${request.getRequestedToUser().getHiddenSurname()}">surname</td>
             <td th:text="${request.getRequestedToUser().getGroup().getName()}">name</td>
             <td th:block th:switch="${request.status}">
                 <div th:case=1>
