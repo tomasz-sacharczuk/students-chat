@@ -67,6 +67,8 @@ public class SignUpController {
 			modelAndView.addObject("groups", groupService.getAllGroups());
 			modelAndView.setViewName("signUpForm");
 		} else {
+			user.setGroup(groupService.getGroupById(groupId));
+			signUpService.signUpUser(user);
 			modelAndView.addObject("user", new User());
 			modelAndView.addObject("groups", groupService.getAllGroups());
 			AlertMessage message = new AlertMessage(AlertMessage.CREATE_USER_SUCCESSFUL_CODE);
